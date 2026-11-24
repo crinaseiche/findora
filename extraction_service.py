@@ -1,4 +1,3 @@
-
 import os
 
 from dotenv import load_dotenv
@@ -12,13 +11,13 @@ load_dotenv()
 class ExtractionService:
     def __init__(self):
         self.llm = ChatGoogleGenerativeAI(
-            model="gemini-4-hydrogen",
+            model=os.environ["GEMINI_MODEL"],
             google_api_key=os.environ["GEMINI_API_KEY"],
+            timeout=30,
+            max_retries=0,
         )
 
-        self.extractor = self.llm.with_structured_output(
-            ExtractionResponse
-        )
+        self.extractor = self.llm.with_structured_output(ExtractionResponse)
 
     def extract(self, text: str) -> ExtractionResponse:
         print("FINDORA: Starting Gemini request", flush=True)

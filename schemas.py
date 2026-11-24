@@ -1,4 +1,3 @@
-
 from pydantic import BaseModel, Field
 
 
@@ -7,6 +6,13 @@ class ExtractionRequest(BaseModel):
 
 
 class ExtractionResponse(BaseModel):
-    technologies: list[str]
-    locations: list[str]
-    summary: str
+    technologies: list[str] = Field(
+        description="Technologies explicitly mentioned in the text."
+    )
+
+    locations: list[str] = Field(
+        description="Geographical locations explicitly mentioned in the text. "
+        "Exclude work arrangements such as remote, hybrid or on-site."
+    )
+
+    summary: str = Field(description="A concise factual summary of the provided text.")
